@@ -1,0 +1,20 @@
+{
+  "name": "vizor",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "git@github.com:danburzo/vizor.git",
+  "author": "Dan Burzo <danburzo@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "parcel": "^1.9.6"
+  },
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  }
+}
