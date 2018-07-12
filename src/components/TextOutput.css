@@ -1,0 +1,11 @@
+.text-output {
+}
+
+.text-output textarea {
+	display: block;
+	height: 10em;
+	width: 100%;
+	box-sizing: border-box;
+	line-height: 1.5;
+	padding: 1em;
+}

@@ -32,7 +32,7 @@ class App extends React.Component {
 		return (
 			<div className="container">
 				<ApiKey onSetKey={this.setKey} onRemoveKey={this.removeKey} api_key={key} />
-				{key && <ImageSubmitter />}
+				{key && <ImageSubmitter api_key={key} />}
 			</div>
 		);
 	}
