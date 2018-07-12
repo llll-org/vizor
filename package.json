@@ -14,12 +14,14 @@
 		"husky": "^0.14.3",
 		"parcel": "^1.9.6",
 		"prettier": "1.13.7",
-		"pretty-quick": "^1.6.0"
+		"pretty-quick": "^1.6.0",
+		"gh-pages": "^1.2.0"
 	},
 	"scripts": {
 		"start": "parcel src/index.html",
-		"build": "parcel build src/index.html",
-		"precommit": "pretty-quick --staged"
+		"build": "parcel build src/index.html --public-url /vizor",
+		"precommit": "pretty-quick --staged",
+		"deploy": "yarn build && gh-pages -d dist"
 	},
 	"prettier": {
 		"bracketSpacing": true,
