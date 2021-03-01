@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { recognizeText } from '../api';
 
@@ -7,18 +7,12 @@ import TextOutput from './TextOutput';
 
 import './ImageSubmitter.css';
 
-class ImageSubmitter extends React.Component {
-	constructor(props) {
-		super(props);
-		this.handleChange = this.handleChange.bind(this);
-		this.state = {
-			results: []
-		};
-	}
+const ImageSubmitter = props => {
+	let [results, setResults] = useState([]);
+	const { api_key } = props;
 
-	handleChange(e) {
-		const { files } = e.target;
-		const { api_key } = this.props;
+	let process_files = dataTransfer => {
+		const { files } = dataTransfer;
 		Promise.all(
 			[...files].map(file =>
 				new Promise(resolve => {
@@ -29,25 +23,41 @@ class ImageSubmitter extends React.Component {
 			)
 		)
 			.then(results => {
-				this.setState({ results: results.map(r => r.data) });
+				setResults(results.map(r => r.data));
 			})
 			.catch(err => console.error(err));
-	}
+	};
 
-	render() {
-		let { results } = this.state;
+	let handleChange = e => {
+		process_files(e.target);
+	};
 
-		return (
-			<div className="image-submitter">
-				<input type="file" onChange={this.handleChange} />
+	useEffect(() => {
+		const dragover = e => e.preventDefault();
+		const drop = e => {
+			e.preventDefault();
+			process_files(e.dataTransfer);
+		};
 
-				{results &&
-					results.length > 0 && (
-						<TextOutput text={results[0].responses[0].fullTextAnnotation.text} />
-					)}
-			</div>
-		);
-	}
-}
+		document.addEventListener('dragover', dragover);
+		document.addEventListener('drop', drop);
+		return () => {
+			document.removeEventListener('dragover', dragover);
+			document.removeEventListener('drop', drop);
+		};
+	}, []);
+
+	return (
+		<div className="image-submitter">
+			<input type="file" onChange={handleChange} multiple />
+
+			{results && results.length > 0 && (
+				<TextOutput
+					text={results.map(r => r.responses[0].fullTextAnnotation.text).join('\n')}
+				/>
+			)}
+		</div>
+	);
+};
 
 export default ImageSubmitter;
