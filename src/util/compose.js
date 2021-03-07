@@ -16,9 +16,11 @@ export default function compose(annotation) {
 													case 'SPACE':
 													case 'SURE_SPACE':
 													case 'EOL_SURE_SPACE':
-													case 'HYPHEN':
-													case 'LINE_BREAK':
 														bk = ' ';
+														break;
+													case 'LINE_BREAK':
+													case 'HYPHEN':
+														bk = '';
 												}
 												if (bk) {
 													ret = s.property.detectedBreak.isPrefix
