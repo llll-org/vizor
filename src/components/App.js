@@ -24,6 +24,19 @@ const App = props => {
 
 	const process_files = useCallback(
 		files => {
+			if (!files && !files.length) {
+				return;
+			}
+
+			if (
+				files.length > 10 &&
+				!confirm(
+					`You're trying to process ${files.length} images at once. It may work or it may fail. Proceed?`
+				)
+			) {
+				return;
+			}
+
 			setResults([]);
 			setProcessing(true);
 			Promise.all(

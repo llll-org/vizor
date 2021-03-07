@@ -45,6 +45,10 @@ const ImageSubmitter = props => {
 					paste images from the clipboard <span className="focus-note"></span>
 				</li>
 			</ul>
+			<p className="t--info">
+				Images are processed in parallel, so don't go overboard submitting too many at a
+				time.
+			</p>
 			<form onSubmit={handleSubmit} ref={formEl}>
 				<p>
 					<input type="file" name="images" multiple />
