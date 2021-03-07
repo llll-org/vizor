@@ -46,9 +46,8 @@ const App = props => {
 			{key && (
 				<Fragment>
 					<ImageSubmitter process={process_files} />
-					<TextOutput
-						text={results.map(r => r.responses[0].fullTextAnnotation.text).join('\n')}
-					/>
+					<TextOutput results={results} />
+					<JSONOutput results={results} />
 				</Fragment>
 			)}
 		</div>

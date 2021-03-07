@@ -3,3 +3,17 @@
 	background: #fff;
 	margin: 1em 0;
 }
+
+.image-submitter:focus,
+.image-submitter:focus-within {
+	outline: 3px solid royalblue;
+}
+
+.focus-note:after {
+	content: ' — focus me first!';
+}
+
+.image-submitter:focus .focus-note:after,
+.image-submitter:focus-within .focus-note:after {
+	content: " — I'm focused!";
+}

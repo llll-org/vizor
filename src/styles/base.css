@@ -3,6 +3,7 @@ body {
 	padding: 1em;
 	margin: 0;
 	background: #f0f0f0;
+	line-height: 1.4;
 }
 
 .container {
@@ -23,4 +24,8 @@ button {
 	color: #fff;
 	background: royalblue;
 	padding: 0.5em 1em;
+}
+
+.t--info {
+	font-size: 0.8em;
 }

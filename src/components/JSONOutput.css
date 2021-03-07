@@ -3,3 +3,10 @@
 	padding: 1em;
 	background: #fff;
 }
+
+.json-output summary {
+	background: #fff;
+
+	position: sticky;
+	top: 0;
+}

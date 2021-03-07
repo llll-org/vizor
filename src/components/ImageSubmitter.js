@@ -23,10 +23,20 @@ const ImageSubmitter = props => {
 		props.process(e.target.elements['images'].files);
 	}, []);
 
+	const handlePaste = useCallback(e => {
+		props.process(e.clipboardData.files);
+	}, []);
+
 	return (
-		<div className="image-submitter">
+		<div className="image-submitter" tabIndex="0" onPaste={handlePaste}>
 			<h2>Select images</h2>
-			<p>Choose images from your computer or drop them on the page.</p>
+			<ul className="t--info">
+				<li>submit images from your computer using the form below; or</li>
+				<li>drag & drop images on this page; or</li>
+				<li>
+					paste images from the clipboard <span className="focus-note"></span>
+				</li>
+			</ul>
 			<form onSubmit={handleSubmit}>
 				<p>
 					<input type="file" name="images" multiple />
