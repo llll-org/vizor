@@ -1,12 +1,10 @@
 .image-submitter {
-	padding: 1em;
-	background: #fff;
-	margin: 1em 0;
+	padding: var(--pad) 0;
 }
 
 .image-submitter:focus,
 .image-submitter:focus-within {
-	outline: 3px solid royalblue;
+	background: linear-gradient(to bottom, #ddd, #fff);
 }
 
 .focus-note:after {
@@ -16,4 +14,5 @@
 .image-submitter:focus .focus-note:after,
 .image-submitter:focus-within .focus-note:after {
 	content: " — I'm focused!";
+	font-weight: bold;
 }

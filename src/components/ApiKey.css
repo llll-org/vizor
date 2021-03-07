@@ -1,21 +1,31 @@
 .apikey {
-	background: #ffa;
-	padding: 1em;
-	margin: 1em 0;
 }
 
 .apikey .info {
 	font-size: 0.8em;
-	font-weight: bold;
 }
 
-.keyval {
-	display: inline-block;
-	padding: 0.5em;
-	box-sizing: border-box;
-	max-width: 100%;
-	white-space: nowrap;
+.apikey__current,
+.apikey__new {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	margin: 1em 0;
+}
+
+.apikey__current > * {
 	overflow: hidden;
 	text-overflow: ellipsis;
-	vertical-align: middle;
+}
+
+.apikey__new > :first-child {
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+}
+
+.apikey__new input {
+	flex-grow: 1;
+	margin: 0 1em;
 }

@@ -18,15 +18,16 @@ const ApiKey = props => {
 	let { api_key } = props;
 	return (
 		<div className="apikey">
+			<h2>Google API Key</h2>
 			{api_key ? (
 				<React.Fragment>
-					<p>
-						<strong>Currently using API key:</strong>{' '}
-						<span className="keyval">{api_key}</span>
+					<div className="apikey__current">
+						<span>{api_key}</span>
 						<button type="button" onClick={props.onRemoveKey}>
 							Delete key
 						</button>
-					</p>
+					</div>
+
 					<p className="info">
 						The Vision API is free up to 1000 requests, beyond which Google will start{' '}
 						<a href="https://cloud.google.com/vision/pricing">charging you</a>. Keep an
@@ -35,7 +36,6 @@ const ApiKey = props => {
 				</React.Fragment>
 			) : (
 				<React.Fragment>
-					<h2>Google API Key</h2>
 					<p>
 						You need to{' '}
 						<a
@@ -56,17 +56,17 @@ const ApiKey = props => {
 						to use Vizor. You also need to enable billing for the Google Vision API to
 						work.
 					</p>
-					<form onSubmit={handleSubmit}>
+					<form className="apikey__new" onSubmit={handleSubmit}>
 						<label>
 							Enter Key: <input type="text" value={key} onChange={handleChange} />
 						</label>
-						<button type="submit">OK</button>
-						<p>
-							<strong>Privacy:</strong> Your API key will be stored in your browser's
-							local storage, for convenience. It will <em>not</em> be sent to any
-							server, except API calls to Google.
-						</p>
+						<button type="submit">Add key</button>
 					</form>
+					<p className="info">
+						<strong>Privacy:</strong> Your API key will be stored in your browser's
+						local storage, for convenience. It will <em>not</em> be sent to any server,
+						except API calls to Google.
+					</p>
 				</React.Fragment>
 			)}
 		</div>

@@ -1,7 +1,5 @@
 .json-output {
-	margin: 1em 0;
-	padding: 1em;
-	background: #fff;
+	padding: var(--pad) 0;
 }
 
 .json-output summary {

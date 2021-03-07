@@ -1,9 +1,43 @@
-body {
-	font-family: sans-serif;
-	padding: 1em;
-	margin: 0;
+html {
 	background: #f0f0f0;
-	line-height: 1.4;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+		'Apple Color Emoji', 'Segoe UI Emoji';
+	margin: 1em;
+	line-height: 1.45;
+}
+
+.page {
+	margin: 0 auto;
+	padding: var(--pad);
+	border: var(--border-width) solid var(--border-color);
+	--border-width: 1px;
+	--border-color: var(--c-pastel);
+	--pad: 0.75rem;
+	--c-pastel: #000;
+	background: #fff;
+	max-width: 40rem;
+}
+
+header {
+	display: flex;
+	align-items: stretch;
+	border-bottom: var(--border-width) solid var(--border-color);
+}
+
+header > * {
+	flex-grow: 1;
+	padding: 0 var(--pad) var(--pad);
+}
+
+header > :first-child {
+	padding-left: 0;
+}
+
+header > :not(:last-child) {
+	border-right: var(--border-width) solid var(--border-color);
 }
 
 .container {
@@ -31,7 +65,7 @@ button {
 	appearance: none;
 	border: 1px solid transparent;
 	color: #fff;
-	background: royalblue;
+	background: black;
 }
 
 button:hover,
@@ -40,11 +74,22 @@ button:focus {
 }
 
 button:active {
-	color: royalblue;
+	color: black;
 	border-color: currentColor;
 	background: #fff;
 }
 
 .t--info {
 	font-size: 0.8em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	font-size: 1em;
+	margin: 0;
 }

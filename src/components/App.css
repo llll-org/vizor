@@ -1,0 +1,7 @@
+#app > * {
+	padding: var(--pad) 0;
+}
+
+#app > * + * {
+	border-top: var(--border-width) solid var(--border-color);
+}

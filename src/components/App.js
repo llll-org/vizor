@@ -6,6 +6,7 @@ import JSONOutput from './JSONOutput';
 import TextOutput from './TextOutput';
 
 import { recognizeText } from '../api';
+import './App.css';
 
 const LS_KEY = 'vizor.google_api_key';
 
@@ -65,7 +66,7 @@ const App = props => {
 	);
 
 	return (
-		<div className="container">
+		<Fragment>
 			<ApiKey onSetKey={key => setKey(key)} onRemoveKey={() => setKey(null)} api_key={key} />
 			{key && (
 				<Fragment>
@@ -78,7 +79,7 @@ const App = props => {
 					<JSONOutput results={results} />
 				</Fragment>
 			)}
-		</div>
+		</Fragment>
 	);
 };
 
