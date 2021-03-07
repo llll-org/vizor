@@ -41,7 +41,7 @@ const ImageSubmitter = props => {
 				<p>
 					<input type="file" name="images" multiple />
 				</p>
-				<button type="submit">Process files</button>
+				<button type="submit">Process images</button>
 			</form>
 		</div>
 	);

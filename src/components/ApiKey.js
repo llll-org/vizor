@@ -53,7 +53,8 @@ const ApiKey = props => {
 						>
 							enable the Google Vision API
 						</a>{' '}
-						to use Vizor.
+						to use Vizor. You also need to enable billing for the Google Vision API to
+						work.
 					</p>
 					<form onSubmit={handleSubmit}>
 						<label>

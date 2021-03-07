@@ -23,6 +23,7 @@ const App = props => {
 
 	const process_files = useCallback(
 		files => {
+			setResults([]);
 			Promise.all(
 				[...files]
 					.filter(f => f.type.match(/^image\//))

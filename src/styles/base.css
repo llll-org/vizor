@@ -34,6 +34,17 @@ button {
 	background: royalblue;
 }
 
+button:hover,
+button:focus {
+	outline: 0.25em solid rgba(0, 0, 0, 0.25);
+}
+
+button:active {
+	color: royalblue;
+	border-color: currentColor;
+	background: #fff;
+}
+
 .t--info {
 	font-size: 0.8em;
 }
