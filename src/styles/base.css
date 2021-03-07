@@ -2,10 +2,25 @@ body {
 	font-family: sans-serif;
 	padding: 1em;
 	margin: 0;
-	background: #f9f9f9;
+	background: #f0f0f0;
 }
 
 .container {
 	max-width: 66rem;
 	margin: 0 auto;
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+button {
+	appearance: none;
+	border: none;
+	color: #fff;
+	background: royalblue;
+	padding: 0.5em 1em;
 }

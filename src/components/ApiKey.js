@@ -21,14 +21,16 @@ const ApiKey = props => {
 			{api_key ? (
 				<React.Fragment>
 					<p>
-						<strong>Currently using API key:</strong> <span>{api_key}</span>
+						<strong>Currently using API key:</strong>{' '}
+						<span class="keyval">{api_key}</span>
 						<button type="button" onClick={props.onRemoveKey}>
 							Delete key
 						</button>
 					</p>
-					<p>
+					<p class="info">
 						The Vision API is free up to 1000 requests, beyond which Google will start
-						charging you. Keep an eye on your stats to avoid unforeseen costs.
+						charging you. Keep an eye on your usage statistics to avoid unforeseen
+						costs!
 					</p>
 				</React.Fragment>
 			) : (

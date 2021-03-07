@@ -1,6 +1,15 @@
 .apikey {
-	border-top: 0.25em solid royalblue;
-	background: #fff;
+	background: #ffa;
 	padding: 1em;
 	margin: 1em 0;
+}
+
+.apikey .info {
+	font-size: 0.8em;
+	font-weight: bold;
+}
+
+.keyval {
+	display: inline-block;
+	margin: 0 1em;
 }

@@ -1,42 +1,13 @@
-import React, { useState, useEffect } from 'react';
-
-import { recognizeText } from '../api';
-
-import JSONOutput from './JSONOutput';
-import TextOutput from './TextOutput';
+import React, { useEffect, useCallback } from 'react';
 
 import './ImageSubmitter.css';
 
 const ImageSubmitter = props => {
-	let [results, setResults] = useState([]);
-	const { api_key } = props;
-
-	let process_files = dataTransfer => {
-		const { files } = dataTransfer;
-		Promise.all(
-			[...files].map(file =>
-				new Promise(resolve => {
-					const reader = new FileReader();
-					reader.addEventListener('load', () => resolve(btoa(reader.result)));
-					reader.readAsBinaryString(file);
-				}).then(imageData => recognizeText(api_key, imageData))
-			)
-		)
-			.then(results => {
-				setResults(results.map(r => r.data));
-			})
-			.catch(err => console.error(err));
-	};
-
-	let handleChange = e => {
-		process_files(e.target);
-	};
-
 	useEffect(() => {
 		const dragover = e => e.preventDefault();
 		const drop = e => {
 			e.preventDefault();
-			process_files(e.dataTransfer);
+			props.process(e.dataTransfer.files);
 		};
 
 		document.addEventListener('dragover', dragover);
@@ -47,15 +18,21 @@ const ImageSubmitter = props => {
 		};
 	}, []);
 
+	const handleSubmit = useCallback(e => {
+		e.preventDefault();
+		props.process(e.target.elements['images'].files);
+	}, []);
+
 	return (
 		<div className="image-submitter">
-			<input type="file" onChange={handleChange} multiple />
-
-			{results.length && (
-				<TextOutput
-					text={results.map(r => r.responses[0].fullTextAnnotation.text).join('\n')}
-				/>
-			)}
+			<h2>Select images</h2>
+			<p>Choose images from your computer or drop them on the page.</p>
+			<form onSubmit={handleSubmit}>
+				<p>
+					<input type="file" name="images" multiple />
+				</p>
+				<button type="submit">Process files</button>
+			</form>
 		</div>
 	);
 };

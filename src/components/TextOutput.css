@@ -1,4 +1,7 @@
 .text-output {
+	padding: 1em;
+	background: #fff;
+	margin: 1em 0;
 }
 
 .text-output textarea {
