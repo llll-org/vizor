@@ -11,6 +11,7 @@ const LS_KEY = 'vizor.google_api_key';
 
 const App = props => {
 	const [key, setKey] = useState(window.localStorage.getItem(LS_KEY));
+	const [processing, setProcessing] = useState(false);
 	const [results, setResults] = useState([]);
 
 	useEffect(() => {
@@ -24,6 +25,7 @@ const App = props => {
 	const process_files = useCallback(
 		files => {
 			setResults([]);
+			setProcessing(true);
 			Promise.all(
 				[...files]
 					.filter(f => f.type.match(/^image\//))
@@ -37,8 +39,12 @@ const App = props => {
 			)
 				.then(results => {
 					setResults(results.map(r => r.data));
+					setProcessing(false);
 				})
-				.catch(err => console.error(err));
+				.catch(err => {
+					console.error(err);
+					setProcessing(false);
+				});
 		},
 		[key]
 	);
@@ -48,7 +54,7 @@ const App = props => {
 			<ApiKey onSetKey={key => setKey(key)} onRemoveKey={() => setKey(null)} api_key={key} />
 			{key && (
 				<Fragment>
-					<ImageSubmitter process={process_files} />
+					<ImageSubmitter process={process_files} processing={processing} />
 					<TextOutput results={results} />
 					<JSONOutput results={results} />
 				</Fragment>

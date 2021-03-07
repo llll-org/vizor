@@ -1,12 +1,17 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
 import './ImageSubmitter.css';
 
 const ImageSubmitter = props => {
+	const formEl = useRef(null);
+
 	useEffect(() => {
 		const dragover = e => e.preventDefault();
 		const drop = e => {
 			e.preventDefault();
+			if (formEl.current) {
+				formEl.current.reset();
+			}
 			props.process(e.dataTransfer.files);
 		};
 
@@ -24,6 +29,9 @@ const ImageSubmitter = props => {
 	}, []);
 
 	const handlePaste = useCallback(e => {
+		if (formEl.current) {
+			formEl.current.reset();
+		}
 		props.process(e.clipboardData.files);
 	}, []);
 
@@ -37,11 +45,13 @@ const ImageSubmitter = props => {
 					paste images from the clipboard <span className="focus-note"></span>
 				</li>
 			</ul>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} ref={formEl}>
 				<p>
 					<input type="file" name="images" multiple />
 				</p>
-				<button type="submit">Process images</button>
+				<button type="submit" disabled={props.processing}>
+					{props.processing ? 'Processing...' : 'Process images'}
+				</button>
 			</form>
 		</div>
 	);
