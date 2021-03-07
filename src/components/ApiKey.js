@@ -29,8 +29,8 @@ const ApiKey = props => {
 					</p>
 					<p className="info">
 						The Vision API is free up to 1000 requests, beyond which Google will start
-						charging you. Keep an eye on your usage statistics to avoid unforeseen
-						costs!
+						<a href="https://cloud.google.com/vision/pricing">charging you</a>. Keep an
+						eye on your usage statistics to avoid unforeseen costs!
 					</p>
 				</React.Fragment>
 			) : (

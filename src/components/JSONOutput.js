@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import './JSONOutput.css';
+
+const has_async_clipboard = navigator.clipboard && navigator.clipboard.writeText;
 
 const JSONOutput = ({ results }) => {
 	if (!results || !results.length) {
 		return null;
 	}
 
-	const abridge = (key, value) => {
-		if (key === 'boundingPoly' || key === 'boundingBox') {
-			return '…';
-		}
-		return value;
-	};
+	const json = JSON.stringify(
+		results,
+		(key, value) => {
+			if (key === 'boundingPoly' || key === 'boundingBox') {
+				return '…';
+			}
+			return value;
+		},
+		2
+	);
+
+	const copyToClipboard = useCallback(
+		e => {
+			if (has_async_clipboard) {
+				navigator.clipboard.writeText(json);
+			}
+		},
+		[json]
+	);
 
 	return (
 		<div className="json-output">
@@ -23,8 +38,15 @@ const JSONOutput = ({ results }) => {
 			</p>
 			<details>
 				<summary>Click to expand JSON output</summary>
-				<pre>{JSON.stringify(results, abridge, 2)}</pre>
+				<pre>{json}</pre>
 			</details>
+			{has_async_clipboard && (
+				<p>
+					<button type="button" onClick={copyToClipboard}>
+						Copy to clipboard
+					</button>
+				</p>
+			)}
 		</div>
 	);
 };
