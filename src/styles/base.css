@@ -16,9 +16,15 @@ input,
 textarea,
 select {
 	font: inherit;
+	font-size: max(1em, 16px);
 	box-sizing: border-box;
 	padding: 0.5em 1em;
 	border: 1px solid;
+}
+
+input[type='file'] {
+	border: none;
+	max-width: 100%;
 }
 
 button {
