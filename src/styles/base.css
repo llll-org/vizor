@@ -16,14 +16,16 @@ input,
 textarea,
 select {
 	font: inherit;
+	box-sizing: border-box;
+	padding: 0.5em 1em;
+	border: 1px solid;
 }
 
 button {
 	appearance: none;
-	border: none;
+	border: 1px solid transparent;
 	color: #fff;
 	background: royalblue;
-	padding: 0.5em 1em;
 }
 
 .t--info {

@@ -24,13 +24,15 @@ const App = props => {
 	const process_files = useCallback(
 		files => {
 			Promise.all(
-				[...files].map(file =>
-					new Promise(resolve => {
-						const reader = new FileReader();
-						reader.addEventListener('load', () => resolve(btoa(reader.result)));
-						reader.readAsBinaryString(file);
-					}).then(imageData => recognizeText(key, imageData))
-				)
+				[...files]
+					.filter(f => f.type.match(/^image\//))
+					.map(file =>
+						new Promise(resolve => {
+							const reader = new FileReader();
+							reader.addEventListener('load', () => resolve(btoa(reader.result)));
+							reader.readAsBinaryString(file);
+						}).then(imageData => recognizeText(key, imageData))
+					)
 			)
 				.then(results => {
 					setResults(results.map(r => r.data));
