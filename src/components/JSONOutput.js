@@ -12,7 +12,7 @@ const JSONOutput = ({ results }) => {
 	const json = JSON.stringify(
 		results,
 		(key, value) => {
-			if (key === 'boundingPoly' || key === 'boundingBox') {
+			if (key === 'boundingPoly' || key === 'boundingBox' || key === 'textAnnotations') {
 				return '…';
 			}
 			return value;
