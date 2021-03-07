@@ -24,7 +24,7 @@ const ImageSubmitter = props => {
 	}, []);
 
 	const handlePaste = useCallback(e => {
-		props.process(e.clipboardData.files);
+		props.process([...(e.clipboardData.files || [])].filter(f => f.type.match(/^image\//)));
 	}, []);
 
 	return (
