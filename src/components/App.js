@@ -14,6 +14,8 @@ const App = props => {
 	const [processing, setProcessing] = useState(false);
 	const [results, setResults] = useState([]);
 
+	const [precomposed, setPrecomposed] = useState(true);
+
 	useEffect(() => {
 		if (key) {
 			window.localStorage.setItem(LS_KEY, key);
@@ -68,7 +70,11 @@ const App = props => {
 			{key && (
 				<Fragment>
 					<ImageSubmitter process={process_files} processing={processing} />
-					<TextOutput results={results} />
+					<TextOutput
+						results={results}
+						precomposed={precomposed}
+						setPrecomposed={setPrecomposed}
+					/>
 					<JSONOutput results={results} />
 				</Fragment>
 			)}

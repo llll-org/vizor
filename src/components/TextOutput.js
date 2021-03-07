@@ -1,33 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
+import compose from '../util/compose.js';
 
 import './TextOutput.css';
 
 const has_async_clipboard = navigator.clipboard && navigator.clipboard.writeText;
 
-const compose = annotation => {
-	return annotation.pages.map(page => {
-		return page.blocks
-			.map(block => {
-				return block.paragraphs
-					.map(para => {
-						return para.words
-							.map(word => {
-								return word.symbols.map(s => s.text).join('');
-							})
-							.join(' ');
-					})
-					.join('\n\n');
-			})
-			.join('\n\n');
-	});
-};
-
-const TextOutput = ({ results }) => {
+const TextOutput = ({ results, precomposed, setPrecomposed }) => {
 	if (!results || !results.length) {
 		return null;
 	}
-
-	const [precomposed, setPrecomposed] = useState(true);
 
 	const text = results
 		.map(r => {
@@ -49,22 +30,45 @@ const TextOutput = ({ results }) => {
 		[text]
 	);
 
+	const togglePrecomposed = useCallback(e => setPrecomposed(e.target.value === 'true'), [
+		setPrecomposed
+	]);
+
 	return (
 		<div className="text-output">
 			<h2>Text output</h2>
-			<p className="t--info">
-				Pages are separated with the <strong>§§</strong> sequence of characters.
-			</p>
-			<p>
+
+			<p class="serialization-toggle">
 				<label>
 					<input
-						type="checkbox"
+						type="radio"
+						name="precomposed"
+						value="true"
 						checked={precomposed}
-						onChange={e => setPrecomposed(e.target.checked)}
+						onChange={togglePrecomposed}
 					/>
-					Precomposed
+					Default serialization
+				</label>
+
+				<label>
+					<input
+						type="radio"
+						name="precomposed"
+						value="false"
+						checked={!precomposed}
+						onChange={togglePrecomposed}
+					/>
+					Custom serialization
 				</label>
 			</p>
+
+			<p className="t--info">
+				{precomposed
+					? 'Show the text as received on the Google Vision API response. '
+					: 'Merge lines into paragraphs. '}
+				Pages are separated with the <strong>§§</strong> sequence of characters.
+			</p>
+
 			<textarea value={text} readOnly />
 			{has_async_clipboard && (
 				<p>
