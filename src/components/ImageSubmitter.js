@@ -51,7 +51,7 @@ const ImageSubmitter = props => {
 		<div className="image-submitter">
 			<input type="file" onChange={handleChange} multiple />
 
-			{results && results.length > 0 && (
+			{results.length && (
 				<TextOutput
 					text={results.map(r => r.responses[0].fullTextAnnotation.text).join('\n')}
 				/>
