@@ -1,18 +1,23 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 
-import ApiKey from './ApiKey';
-import ImageSubmitter from './ImageSubmitter';
-import JSONOutput from './JSONOutput';
-import TextOutput from './TextOutput';
+import ApiKey from './ApiKey.js';
+import ImageSubmitter from './ImageSubmitter.js';
+import JSONOutput from './JSONOutput.js';
+import TextOutput from './TextOutput.js';
 
-import { recognizeText } from '../api';
+import { recognizeText } from '../api.js';
+import getImageData from '../util/get-image-data.js';
+
 import './App.css';
 
 const LS_KEY = 'vizor.google_api_key';
 
 const App = props => {
 	const [key, setKey] = useState(window.localStorage.getItem(LS_KEY));
-	const [processing, setProcessing] = useState(false);
+
+	const [count, setCount] = useState(0);
+	const [processedCount, setProcessedCount] = useState(0);
+
 	const [results, setResults] = useState([]);
 
 	const [precomposed, setPrecomposed] = useState(true);
@@ -31,35 +36,38 @@ const App = props => {
 				return;
 			}
 
-			if (
-				files.length > 10 &&
-				!confirm(
-					`You're trying to process ${files.length} images at once. It may work or it may fail. Proceed?`
-				)
-			) {
-				return;
-			}
-
 			setResults([]);
-			setProcessing(true);
-			Promise.all(
-				[...files]
-					.filter(f => f.type.match(/^image\//))
-					.map(file =>
-						new Promise(resolve => {
-							const reader = new FileReader();
-							reader.addEventListener('load', () => resolve(btoa(reader.result)));
-							reader.readAsBinaryString(file);
-						}).then(imageData => recognizeText(key, imageData))
-					)
-			)
+			setCount(files.length);
+			setProcessedCount(0);
+
+			let images = [...files].filter(f => f.type.match(/^image\//));
+
+			let chain = images.reduce((chain, img) => {
+				return chain.then(results => {
+					setProcessedCount(curr => curr + 1);
+					return getImageData(img)
+						.then(data => recognizeText(key, data))
+						.then(result => {
+							let res = results.concat(result.data);
+							setResults(res);
+							return res;
+						})
+						.catch(error => {
+							let res = results.concat({ error });
+							setResults(res);
+							return res;
+						});
+				});
+			}, Promise.resolve([]));
+
+			chain
 				.then(results => {
-					setResults(results.map(r => r.data));
-					setProcessing(false);
+					setResults(results);
+					setCount(0);
 				})
 				.catch(err => {
 					console.error(err);
-					setProcessing(false);
+					setCount(0);
 				});
 		},
 		[key]
@@ -70,13 +78,18 @@ const App = props => {
 			<ApiKey onSetKey={key => setKey(key)} onRemoveKey={() => setKey(null)} api_key={key} />
 			{key && (
 				<Fragment>
-					<ImageSubmitter process={process_files} processing={processing} />
+					<ImageSubmitter
+						process={process_files}
+						processedCount={processedCount}
+						count={count}
+					/>
 					<TextOutput
 						results={results}
+						count={count}
 						precomposed={precomposed}
 						setPrecomposed={setPrecomposed}
 					/>
-					<JSONOutput results={results} />
+					<JSONOutput results={results} count={count} />
 				</Fragment>
 			)}
 		</Fragment>

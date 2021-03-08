@@ -5,7 +5,7 @@ import './TextOutput.css';
 
 const has_async_clipboard = navigator.clipboard && navigator.clipboard.writeText;
 
-const TextOutput = ({ results, precomposed, setPrecomposed }) => {
+const TextOutput = ({ results, precomposed, setPrecomposed, count }) => {
 	if (!results || !results.length) {
 		return null;
 	}
@@ -17,7 +17,7 @@ const TextOutput = ({ results, precomposed, setPrecomposed }) => {
 					? r.responses[0].fullTextAnnotation.text
 					: compose(r.responses[0].fullTextAnnotation);
 			}
-			return `[Error processing, check JSON output]`;
+			return `[Error processing: ${r.error ? r.error.message : ''}]`;
 		})
 		.join('\n§§\n');
 
@@ -36,9 +36,9 @@ const TextOutput = ({ results, precomposed, setPrecomposed }) => {
 
 	return (
 		<div className="text-output">
-			<h2>Text output</h2>
+			<h2>Text output {count ? '(partial)' : ''}</h2>
 
-			<p class="serialization-toggle">
+			<p className="serialization-toggle">
 				<label>
 					<input
 						type="radio"

@@ -4,7 +4,7 @@ import './JSONOutput.css';
 
 const has_async_clipboard = navigator.clipboard && navigator.clipboard.writeText;
 
-const JSONOutput = ({ results }) => {
+const JSONOutput = ({ results, count }) => {
 	if (!results || !results.length) {
 		return null;
 	}
@@ -31,7 +31,7 @@ const JSONOutput = ({ results }) => {
 
 	return (
 		<div className="json-output">
-			<h2>JSON output</h2>
+			<h2>JSON output {count ? '(partial)' : ''}</h2>
 			<p className="t--info">
 				Some properties, such as <var>boundingBox</var> and <var>boundingPoly</var>, are
 				omitted.

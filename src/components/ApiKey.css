@@ -14,7 +14,7 @@
 	margin: 1em 0;
 }
 
-.apikey__current > * {
+.apikey__current-val {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }

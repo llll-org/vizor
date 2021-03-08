@@ -22,7 +22,7 @@ const ApiKey = props => {
 			{api_key ? (
 				<React.Fragment>
 					<div className="apikey__current">
-						<span>{api_key}</span>
+						<span className="apikey__current-val">{api_key}</span>
 						<button type="button" onClick={props.onRemoveKey}>
 							Delete key
 						</button>
