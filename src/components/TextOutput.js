@@ -5,7 +5,13 @@ import './TextOutput.css';
 
 const has_async_clipboard = navigator.clipboard && navigator.clipboard.writeText;
 
-const TextOutput = ({ results, precomposed, setPrecomposed, count }) => {
+const SERIALIZATION_INFO = {
+	default: 'Show the text as received from the Google Vision API response.',
+	prose: 'Merge lines into paragraphs; remove end-of-line hyphens.',
+	verse: 'Maintain separate lines and hyphens.'
+};
+
+const TextOutput = ({ results, serialization, setSerialization, count }) => {
 	if (!results || !results.length) {
 		return null;
 	}
@@ -13,13 +19,17 @@ const TextOutput = ({ results, precomposed, setPrecomposed, count }) => {
 	const text = results
 		.map(r => {
 			if (r.responses && r.responses[0] && r.responses[0].fullTextAnnotation) {
-				return precomposed
+				return serialization === 'default'
 					? r.responses[0].fullTextAnnotation.text
-					: compose(r.responses[0].fullTextAnnotation);
+					: compose(r.responses[0].fullTextAnnotation, serialization === 'prose');
 			}
 			return `[Error processing: ${r.error ? r.error.message : ''}]`;
 		})
-		.join('\n§§\n');
+		.join('\n\n§§\n\n')
+		/*
+			Remove excessive whitespace.
+		 */
+		.replace(/\n{3,}/g, '\n\n');
 
 	const copyToClipboard = useCallback(
 		e => {
@@ -30,10 +40,6 @@ const TextOutput = ({ results, precomposed, setPrecomposed, count }) => {
 		[text]
 	);
 
-	const togglePrecomposed = useCallback(e => setPrecomposed(e.target.value === 'true'), [
-		setPrecomposed
-	]);
-
 	return (
 		<div className="text-output">
 			<h2>Text output {count ? '(partial)' : ''}</h2>
@@ -42,31 +48,40 @@ const TextOutput = ({ results, precomposed, setPrecomposed, count }) => {
 				<label>
 					<input
 						type="radio"
-						name="precomposed"
-						value="true"
-						checked={precomposed}
-						onChange={togglePrecomposed}
+						name="serialization"
+						value="default"
+						checked={serialization === 'default'}
+						onChange={e => setSerialization(e.target.value)}
 					/>
-					Default serialization
+					Default
 				</label>
 
 				<label>
 					<input
 						type="radio"
-						name="precomposed"
-						value="false"
-						checked={!precomposed}
-						onChange={togglePrecomposed}
+						name="serialization"
+						value="prose"
+						checked={serialization === 'prose'}
+						onChange={e => setSerialization(e.target.value)}
 					/>
-					Custom serialization
+					Prose
+				</label>
+
+				<label>
+					<input
+						type="radio"
+						name="serialization"
+						value="verse"
+						checked={serialization === 'verse'}
+						onChange={e => setSerialization(e.target.value)}
+					/>
+					Verse
 				</label>
 			</p>
 
 			<p className="t--info">
-				{precomposed
-					? 'Show the text as received on the Google Vision API response. '
-					: 'Merge lines into paragraphs. '}
-				Pages are separated with the <strong>§§</strong> sequence of characters.
+				{SERIALIZATION_INFO[serialization]} Pages are separated with the <strong>§§</strong>{' '}
+				sequence of characters.
 			</p>
 
 			<textarea value={text} readOnly />

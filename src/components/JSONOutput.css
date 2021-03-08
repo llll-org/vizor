@@ -2,9 +2,12 @@
 	padding: var(--pad) 0;
 }
 
+.json-output details {
+	margin: var(--pad) 0;
+}
+
 .json-output summary {
 	background: #fff;
-
 	position: sticky;
 	top: 0;
 }

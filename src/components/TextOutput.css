@@ -9,6 +9,11 @@
 	box-sizing: border-box;
 	line-height: 1.5;
 	padding: 1em;
+	margin: var(--pad) 0;
+}
+
+.serialization-toggle {
+	margin: var(--pad) 0;
 }
 
 .serialization-toggle > :not(:last-child) {

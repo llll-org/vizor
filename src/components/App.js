@@ -11,16 +11,18 @@ import getImageData from '../util/get-image-data.js';
 import './App.css';
 
 const LS_KEY = 'vizor.google_api_key';
+const LS_SERIALIZATION = 'vizor.serialization';
 
 const App = props => {
 	const [key, setKey] = useState(window.localStorage.getItem(LS_KEY));
+	const [serialization, setSerialization] = useState(
+		window.localStorage.getItem(LS_SERIALIZATION) || 'default'
+	);
 
 	const [count, setCount] = useState(0);
 	const [processedCount, setProcessedCount] = useState(0);
 
 	const [results, setResults] = useState([]);
-
-	const [precomposed, setPrecomposed] = useState(true);
 
 	useEffect(() => {
 		if (key) {
@@ -29,6 +31,10 @@ const App = props => {
 			window.localStorage.removeItem(LS_KEY);
 		}
 	}, [key]);
+
+	useEffect(() => {
+		window.localStorage.setItem(LS_SERIALIZATION, serialization);
+	}, [serialization]);
 
 	const process_files = useCallback(
 		files => {
@@ -86,8 +92,8 @@ const App = props => {
 					<TextOutput
 						results={results}
 						count={count}
-						precomposed={precomposed}
-						setPrecomposed={setPrecomposed}
+						serialization={serialization}
+						setSerialization={setSerialization}
 					/>
 					<JSONOutput results={results} count={count} />
 				</Fragment>
