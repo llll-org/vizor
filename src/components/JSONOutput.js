@@ -1,15 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 
 import './JSONOutput.css';
 
 const has_async_clipboard = navigator.clipboard && navigator.clipboard.writeText;
 
-const JSONOutput = ({ results, count }) => {
-	if (!results || !results.length) {
-		return null;
-	}
-
-	const json = JSON.stringify(
+const serialize = results =>
+	JSON.stringify(
 		results,
 		(key, value) => {
 			if (key === 'boundingPoly' || key === 'boundingBox' || key === 'textAnnotations') {
@@ -20,14 +16,18 @@ const JSONOutput = ({ results, count }) => {
 		2
 	);
 
-	const copyToClipboard = useCallback(
-		e => {
-			if (has_async_clipboard) {
-				navigator.clipboard.writeText(json);
-			}
-		},
-		[json]
-	);
+const JSONOutput = ({ results, count }) => {
+	if (!results || !results.length) {
+		return null;
+	}
+
+	const copyToClipboard = e => {
+		if (has_async_clipboard) {
+			navigator.clipboard.writeText(serialize(results));
+		}
+	};
+
+	const [detailsOpen, setDetailsOpen] = useState(false);
 
 	return (
 		<div className="json-output">
@@ -36,9 +36,9 @@ const JSONOutput = ({ results, count }) => {
 				Some properties, such as <var>boundingBox</var> and <var>boundingPoly</var>, are
 				omitted.
 			</p>
-			<details>
+			<details onToggle={e => setDetailsOpen(e.target.open)}>
 				<summary>Click to expand JSON output</summary>
-				<pre>{json}</pre>
+				<pre>{detailsOpen ? serialize(results) : ''}</pre>
 			</details>
 			{has_async_clipboard && (
 				<p>
