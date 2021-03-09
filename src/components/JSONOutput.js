@@ -27,6 +27,12 @@ const JSONOutput = ({ results, count }) => {
 		}
 	};
 
+	const share = e => {
+		if (navigator.share) {
+			navigator.share({ text: serialize(results) });
+		}
+	};
+
 	const [detailsOpen, setDetailsOpen] = useState(false);
 
 	return (
@@ -40,13 +46,19 @@ const JSONOutput = ({ results, count }) => {
 				<summary>Click to expand JSON output</summary>
 				<pre>{detailsOpen ? serialize(results) : ''}</pre>
 			</details>
-			{has_async_clipboard && (
-				<p>
+			<div>
+				{has_async_clipboard && (
 					<button type="button" onClick={copyToClipboard}>
 						Copy to clipboard
 					</button>
-				</p>
-			)}
+				)}
+
+				{navigator.share && (
+					<button type="button" onClick={share}>
+						Share
+					</button>
+				)}
+			</div>
 		</div>
 	);
 };

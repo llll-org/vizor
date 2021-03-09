@@ -40,6 +40,15 @@ const TextOutput = ({ results, serialization, setSerialization, count }) => {
 		[text]
 	);
 
+	const share = useCallback(
+		e => {
+			if (navigator.share) {
+				navigator.share({ text });
+			}
+		},
+		[text]
+	);
+
 	return (
 		<div className="text-output">
 			<h2>Text output {count ? '(partial)' : ''}</h2>
@@ -85,13 +94,19 @@ const TextOutput = ({ results, serialization, setSerialization, count }) => {
 			</p>
 
 			<textarea value={text} readOnly />
-			{has_async_clipboard && (
-				<p>
+			<div>
+				{has_async_clipboard && (
 					<button type="button" onClick={copyToClipboard}>
 						Copy to clipboard
 					</button>
-				</p>
-			)}
+				)}
+
+				{navigator.share && (
+					<button type="button" onClick={share}>
+						Share
+					</button>
+				)}
+			</div>
 		</div>
 	);
 };
