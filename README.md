@@ -1,15 +1,11 @@
-# vizor
+# Vizor
 
-A simple front-end for OCR with Google Vision API. Use it here: [llll.ro/tools/vizor](https://llll.ro/tools/vizor).
+A simple front-end for OCR with Google Vision API. Use it online at [llll.ro/tools/vizor](https://llll.ro/tools/vizor) or read below for running a local copy.
 
-## Development
+## Running Vizor locally
 
-To start a local development version of the app:
+To run Vizor locally, clone this Git repository to your computer and navigate to the project folder in your command-line application. Before you can run the app, install the necessary dependencies with `npm install`. You only need to do this once. To start the app at [`http://localhost:1234`](http://localhost:1234) run:
 
 ```bash
-cd vizor # navigate to the project root
-npm install # install dependencies
-npm run start # start server
+npm run start
 ```
-
-The app will start on [`localhost:1234`](http://localhost:1234).
