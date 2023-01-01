@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 
-import ApiKey from './ApiKey.js';
-import ImageSubmitter from './ImageSubmitter.js';
-import JSONOutput from './JSONOutput.js';
-import TextOutput from './TextOutput.js';
+import ApiKey from './ApiKey.jsx';
+import ImageSubmitter from './ImageSubmitter.jsx';
+import JSONOutput from './JSONOutput.jsx';
+import TextOutput from './TextOutput.jsx';
 
 import { recognizeText } from '../api.js';
 import getImageData from '../util/get-image-data.js';

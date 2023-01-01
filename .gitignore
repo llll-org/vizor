@@ -61,7 +61,4 @@ typings/
 .next
 
 dist
-.cache
 .DS_Store
-
-.parcel-cache

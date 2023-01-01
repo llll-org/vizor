@@ -1,5 +1,9 @@
 html {
 	background: #f0f0f0;
+	--border-width: 1px;
+	--border-color: var(--c-pastel);
+	--pad: 0.75rem;
+	--c-pastel: #000;
 }
 
 body {
@@ -13,10 +17,6 @@ body {
 	margin: 0 auto;
 	padding: var(--pad);
 	border: var(--border-width) solid var(--border-color);
-	--border-width: 1px;
-	--border-color: var(--c-pastel);
-	--pad: 0.75rem;
-	--c-pastel: #000;
 	background: #fff;
 	max-width: 40rem;
 }
