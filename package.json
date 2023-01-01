@@ -18,7 +18,7 @@
 	"scripts": {
 		"prepare": "git config core.hooksPath .git-hooks",
 		"start": "esbuild --servedir=dist && cp src/index.html dist/index.html",
-		"build": "esbuild src/index.js --bundle --outdir=dist && cp src/index.html dist/index.html",
+		"build": "esbuild src/index.js --bundle --minify --outdir=dist && cp src/index.html dist/index.html",
 		"deploy": "npm run build && ./deploy.sh",
 		"test": "tape -r esm 'src/**/__tests__/*.test.js'"
 	},
