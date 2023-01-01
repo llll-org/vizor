@@ -64,4 +64,4 @@ dist
 .cache
 .DS_Store
 
-vizor.config.json
+.parcel-cache

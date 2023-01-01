@@ -53,8 +53,9 @@ const App = props => {
 					setProcessedCount(curr => curr + 1);
 					return getImageData(img)
 						.then(data => recognizeText(key, data))
+						.then(response => response.json())
 						.then(result => {
-							let res = results.concat(result.data);
+							let res = results.concat(result);
 							setResults(res);
 							return res;
 						})
